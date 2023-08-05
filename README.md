@@ -17,6 +17,10 @@
 5. Run:
 - Run the `welcome.java` file to start the application.
 
+
+
+- Project SDK version 20 -
+
 ## Features
 
 - User Registration: New users can sign up for an account.
