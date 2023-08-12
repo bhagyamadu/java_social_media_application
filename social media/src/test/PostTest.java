@@ -5,14 +5,14 @@ import java.awt.event.ActionEvent;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-class MockMySQLJDBCConnection extends MySQLJDBCConnection {
-    @Override
-    public Connection getConnection() {
-        // Create a mock connection or use an in-memory database for testing.
-        // For this example, we'll just return a mock Connection.
-        return null; // You can modify this to return a Connection object for testing.
-    }
-}
+//class MockMySQLJDBCConnection extends MySQLJDBCConnection {
+//    @Override
+//    public Connection getConnection() {
+//        // Create a mock connection or use an in-memory database for testing.
+//        // For this example, we'll just return a mock Connection.
+//        return null; // You can modify this to return a Connection object for testing.
+//    }
+//}
 
 class PostTest {
 
@@ -22,7 +22,7 @@ class PostTest {
         JButton postButton = new JButton();
         JTextField textField1 = new JTextField();
         JTextArea helloThisIsPlaceTextArea = new JTextArea();
-        MySQLJDBCConnection dbConnection = new MockMySQLJDBCConnection();
+        MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
 
         // Set the text in the text fields
         textField1.setText("Test Title");

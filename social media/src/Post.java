@@ -29,7 +29,7 @@ public class Post extends JFrame {
 
 
                 // Perform the database post creation
-                MySQLJDBCConnection dbConnection = new MySQLJDBCConnection();
+                MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
                 try (Connection connection = dbConnection.getConnection()) {
                     if (connection != null) {
                         System.out.println("Connected to the database successfully!");
@@ -91,8 +91,7 @@ public class Post extends JFrame {
     // Method to get the username using the email
     private String getUsernameFromEmail(String email) {
         String username = null;
-        MySQLJDBCConnection dbConnection = new MySQLJDBCConnection();
-
+        MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
         try (Connection connection = dbConnection.getConnection()) {
             if (connection != null) {
                 String query = "SELECT name FROM user WHERE email = ?";

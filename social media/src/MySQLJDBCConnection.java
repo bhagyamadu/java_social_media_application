@@ -11,15 +11,23 @@ public class MySQLJDBCConnection {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
+    private static MySQLJDBCConnection instance; // Singleton instance
     private Connection connection;
 
-    public MySQLJDBCConnection() {
+    private MySQLJDBCConnection() {
         // Load the JDBC driver
         try {
             Class.forName(JDBC_DRIVER);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public static synchronized MySQLJDBCConnection getInstance() {
+        if (instance == null) {
+            instance = new MySQLJDBCConnection();
+        }
+        return instance;
     }
 
     public Connection getConnection() throws SQLException {

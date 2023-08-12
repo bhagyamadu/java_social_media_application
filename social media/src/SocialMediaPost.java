@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 class SocialMediaPost extends JPanel {
     private String postTitle;
@@ -51,17 +53,20 @@ class SocialMediaPost extends JPanel {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> SocialMediaPost.createAndShowGUI());
+        SwingUtilities.invokeLater(() -> createAndShowGUI());
     }
+
 
     static void createAndShowGUI() {
         JFrame frame = new JFrame("Social Media Post");
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 
         try {
             // Connect to the database using MySQLJDBCConnection
-            MySQLJDBCConnection dbConnection = new MySQLJDBCConnection();
+            MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
+
             Connection connection = dbConnection.getConnection();
 
             // Fetch posts from the database
@@ -93,68 +98,9 @@ class SocialMediaPost extends JPanel {
             JButton button1 = new JButton("New Post");
             buttonsPanel.add(button1);
 
-            button1.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Code to execute when the button is clicked
-                    System.out.println("Button1 was clicked!");
-                    // Close the login window
-
-                    frame.dispose();
-                    //redrirect to post
-
-                    Post ps = new Post();
-                    ps.setContentPane(ps.postpanel);
-                    ps.setTitle("test panel");
-                    ps.setSize(600, 400);
-                    ps.setVisible(true);
-                    ps.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    // Add your desired actions here
-                }
-            });
-
             // Button 2
             JButton button2 = new JButton("Unsubscribe");
             buttonsPanel.add(button2);
-
-
-            button2.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    // Code to execute when the button is clicked
-                    System.out.println("Button1 was clicked!");
-                    // Close the login window
-                    frame.dispose();
-                    // Redirect to post
-                    Channels ch = new Channels();
-                    ch.setContentPane(ch.channels);
-                    ch.setTitle("test panel");
-                    ch.setSize(600, 400);
-                    ch.setVisible(true);
-                    ch.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                    // Add your desired actions here
-
-                    // Assuming you have the user ID stored somewhere, replace userId with the actual ID
-                    int userId = 1; // Replace with the actual user ID
-
-                    // Update the database user table channel value to null
-                    String sql = "UPDATE user SET channel = NULL WHERE id = ?";
-
-                    try (Connection conn = dbConnection.getConnection();
-                         PreparedStatement statement = conn.prepareStatement(sql)) {
-                        statement.setInt(1, userId);
-                        statement.executeUpdate();
-                        System.out.println("User channel updated to null for user ID: " + userId);
-                    } catch (SQLException ex) {
-                        System.err.println("Error updating user channel: " + ex.getMessage());
-                        ex.printStackTrace();
-                    }
-                }
-            });
-
-
-
-
 
             // Logout Button
             JButton logoutButton = new JButton("Logout");

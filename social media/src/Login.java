@@ -8,13 +8,14 @@ import java.sql.SQLException;
 
 public class Login extends JFrame {
     JButton logInButton;
-    public JPanel loginpanel;
+    JButton backButton;
+    JPanel loginpanel;
     JTextField textField1;
     JPasswordField passwordField1;
-    private JButton backButton;
-
 
     public Login() {
+        // Existing code for UI components initialization...
+
         logInButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -29,7 +30,7 @@ public class Login extends JFrame {
                 }
 
                 // Perform the database login check
-                MySQLJDBCConnection dbConnection = new MySQLJDBCConnection();
+                MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
                 try (Connection connection = dbConnection.getConnection()) {
                     if (connection != null) {
                         System.out.println("Connected to the database successfully!");
@@ -49,14 +50,10 @@ public class Login extends JFrame {
                                 userLogin.setPassword("secretpassword");
                                 String username2 = System.getProperty("user.name");
 
-//
-
                                 // Close the login window
                                 dispose();
 
-
-                                //redrirect to post
-
+                                // Redirect to post
                                 SwingUtilities.invokeLater(() -> SocialMediaPost.createAndShowGUI());
                             } else {
                                 System.out.println("Invalid username or password.");
@@ -73,6 +70,7 @@ public class Login extends JFrame {
                 }
             }
         });
+
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -82,22 +80,18 @@ public class Login extends JFrame {
                 wc.setSize(600, 400);
                 wc.setVisible(true);
                 wc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
             }
         });
     }
 
-
-
-    // ... (rest of the code remains the same)
-
-//    public static void main(String[] args) {
-//
-//        Login ln = new Login();
-//        ln.setContentPane(ln.loginpanel);
-//        ln.setTitle("test panel");
-//        ln.setSize(600, 400);
-//        ln.setVisible(true);
-//        ln.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Login ln = new Login();
+            ln.setContentPane(ln.loginpanel);
+            ln.setTitle("Login Panel");
+            ln.setSize(600, 400);
+            ln.setVisible(true);
+            ln.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        });
+    }
 }

@@ -30,7 +30,7 @@ public class Register extends JFrame {
                     }
 
                     // Perform the database registration
-                    MySQLJDBCConnection dbConnection = new MySQLJDBCConnection();
+                    MySQLJDBCConnection dbConnection = MySQLJDBCConnection.getInstance();
                     try (Connection connection = dbConnection.getConnection()) {
                         if (connection != null) {
                             System.out.println("Connected to the database successfully!");
